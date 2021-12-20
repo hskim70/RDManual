@@ -7,7 +7,8 @@ RecurDyn Manual
    :maxdepth: 5
    :glob:
 
-   install
+   install.rst
+   
 ..   Tutorial_Sphinx/Tutorial_Sphinx
 ..   Tutorial_Sphinx/RecurDyn_Issue
 ..   20_TSG/*
