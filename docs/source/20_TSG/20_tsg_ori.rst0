@@ -1,0 +1,831 @@
+TSG
+===
+
+.. image:: media_pandoc/media/image1.gif
+   :width: 5.47917in
+   :height: 4.51042in
+
+Figure 1  **TSG** example
+
+**RecurDyn**/**TSG** (Time Signal Generator) is a toolkit that generates
+the Input Signals which can be applied to MBD or MFBD model. In other
+words, if the Target Signals are obtained, which are measured as
+accelerations, velocities, displacements, and so on at the specific
+locations of a physical model through the experimental test,
+**RecurDyn**/**TSG** can find out the Input Signals to match the Target
+Signals.
+
+TSG Overview
+------------
+
+**RecurDyn**/**TSG** (Time Signal Generator) generates Input Signals by
+using the signal processing. After the Target Signals are obtained such
+as accelerations, velocities, displacements, and so on at the specific
+locations of a physical model in the experimental test,
+**RecurDyn**/**TSG** can find out Input Signals so that the Target
+Signals can be matched after simulation. After that, the Input Signals
+can be applied to Forces or Motions (displacement, velocity,
+acceleration) as function expressions in the MBD model.
+
+In experimental test, test engineers can measure Experiment Data such as
+accelerations, forces, angular position and displacements at some
+location of the structure. However, the measured data can’t be applied
+directly to the MBD model in **RecurDyn** because the MBD model can’t be
+built considering all non-linear properties of physical model. That
+means that the MBD model is different with the physical model.
+Therefore, it is needed to calculate the new Input Signals of the MBD
+model in order to match the measured signals of the physical model. If
+the Output Signals of MBD are similar to the measured signals after
+applying the new Input Signal to the MBD model, the MBD Model can
+guarantee the similar model compared to the physical model.
+
+.. image:: media_pandoc/media/image2.png
+   :width: 7.48659in
+   :height: 2.83056in
+
+Figure 1 **Target Signals** and **Input Signals**
+
+TSG Terminology
+
+-  **Target Signals** are user-defined signals that we want to reproduce
+   and that has been measured experimentally.
+
+-  **Response Signals** are Output Signals of **RecurDyn** at the
+   location of the virtual **Sensors** during iterative simulation.
+   These signals at the end of the process have to match the Target
+   Signals.
+
+-  **Drive Signals** are Input Signals of MBD model at the location of
+   the virtual **Actuators**.
+
+-  **Actuator** Defines **Drive Signal Locations** applied to Motion or
+   Force on the Joint or Force elements on a MBD Model.
+
+-  **Sensor** Defines **Response Signal Locations** to match
+   user-defined Target Signals as a general **Expression.**
+
+.. image:: media_pandoc/media/image4.png
+   :width: 6.21875in
+   :height: 1.84375in
+
+Figure 2 **TSG Terminology**
+
+TSG Procedure
+
+1. **Set up virtual Actuators & Sensors.** This implies that the user
+      needs to define the location, type and direction of the
+      measurement in **RecurDyn**.
+
+2. **Define an association** between the sensors and **Target Signals**.
+
+3. **Calculate FRF (Frequency Response Function)** after simulation.
+
+4. **Correct** the drive signal **iteratively using the error** between
+      Target Signals and Response Signals.
+
+.. image:: media_pandoc/media/image6.png
+   :width: 4.89306in
+   :height: 2.71642in
+
+Figure 3 **TSG Procedure flowchart**
+
+Functions for TSG
+-----------------
+
+Several functions are supported to simulate **TSG**.
+
+.. image:: media_pandoc/media/image8.png
+   :width: 4.09583in
+   :height: 0.89583in
+
+Figure 1 **Signal**, **Simulation**, and **Result** group in the **TSG**
+tab
+
+Signal
+~~~~~~
+
+You should set following three entities.
+
+.. image:: media_pandoc/media/image9.png
+   :width: 1.99167in
+   :height: 0.89583in
+
+Figure 1 **Signal** group in the **TSG** tab
+
+Actuator
+^^^^^^^^
+
+**Actuator** should be created at least one to simulate. **Actuator** is
+an input of the **TSG** model. The concept of both **TSG**/**Actuator**
+and **Control**/**Plane Input** is the same.
+
+.. image:: media_pandoc/media/image10.png
+   :width: 1.99167in
+   :height: 0.89583in
+
+Figure 1 **Actuator** icon of the **Signal** group in the **TSG** tab
+
+.. image:: media_pandoc/media/image11.png
+   :width: 5.03472in
+   :height: 4.49583in
+
+Figure 2 **Actuator List** dialog box
+
+-  **Use**: Determines whether or not to use.
+
+-  **Name**: Defines a name.
+
+-  **Add**: Adds a row to the end of the table.
+
+-  **Insert**: Inserts a row where the cursor is and move the current
+   and later rows down.
+
+-  **Delete**: Deletes the row where the cursor is and move the later
+   rows up.
+
+Step to create an Actuator
+
+|image1|\ Figure 3 Usage of an Actuator
+
+1. Click **Add** in the **Actuator** **List** dialog box.
+
+5.  Rename an actuator.
+
+6.  Select a force or a joint entity to set the actuator.
+
+7.  Click **EL**.
+
+8.  Click **Create** in **Expression List** dialog box.
+
+9.  Rename an **Expression** name.
+
+10. Edit the actuator using “\ **TACT(Acutator_ID)**\ ” expressions in
+    each actuator element.
+
+Sensor
+^^^^^^
+
+**Sensor** should be created at least one to simulate. **Sensor** is an
+output of the **TSG** model. The concept of both **TSG**/**Sensor** and
+**Control**/**Plane Output** is the same.
+
+.. image:: media_pandoc/media/image18.png
+   :width: 1.99167in
+   :height: 0.90417in
+
+Figure 1 **Sensor** icon of the **Signal** group in the **TSG** tab
+
+.. image:: media_pandoc/media/image19.png
+   :width: 5.03472in
+   :height: 4.49583in
+
+Figure 2 **Sensor List** dialog box
+
+-  **Use**: Determines whether or not to use.
+
+-  **Name**: Defines a name.
+
+-  **Expression**: Defines an expression function.
+
+-  **Add**: Adds a row to the end of the table.
+
+-  **Insert**: Inserts a row where the cursor is and move the current
+   and later rows down.
+
+-  **Delete**: Deletes the row where the cursor is and move the later
+   rows up.
+
+Step to create a Sensor
+
+.. image:: media_pandoc/media/image20.png
+   :width: 7.34722in
+   :height: 3.34326in
+
+Figure 3 Usage of a sensor
+
+1. Click **Add** in **Sensor List** dialog box.
+
+2. Rename an **Expression** name.
+
+3. Edit an **Expression**.
+
+Target
+^^^^^^
+
+**Target** should be set to simulate.
+
+.. image:: media_pandoc/media/image24.png
+   :width: 2in
+   :height: 0.90694in
+
+Figure 1 **Target** icon of the **Signal** group in the **TSG** tab
+
+There are two tabs in **Target Output List** dialog.
+
+-  **Target Output List** tab: Set **Target** Signal by choosing a
+   “\*.TARGET” file.
+
+-  **Target Output Function** tab: Making “\*.TARGET” file from a signal
+   file “\*.CSV”.
+
+Step to set Target
+
+.. image:: media_pandoc/media/image25.png
+   :width: 7.48in
+   :height: 4.43889in
+
+Figure 2 Example to set a target
+
+1. Move to **Target Output Function** tab in Target Output List dialog.
+
+2. Select a “\*.CSV” file which has the target sensor signal(s).
+
+3. Set target output “\*.TARGET” file name and path.
+
+4. Click **Create Target Output File**.
+
+5. Move to **Target Output List** tab in **Target Output List** dialog
+   box.
+
+6. Check loading the “\*.TARGET” file or select another “\*.TARGET”
+   file.
+
+Target Output List tab
+''''''''''''''''''''''
+
+|image2|\ The list cannot be modified. The list is always the same with
+created **Sensor** list. Because, the **Target** channels should be the
+same with the created **Sensor** channels.
+
+Figure 1 **Target Output List** dialog box [**Target Output List** tab]
+
+-  **Target Output File (\*.TARGET)** : \*.TARGET file can be set by
+   clicking **…**.
+
+-  **Plot**: If a \*.TARGET file is set and some plot check box in the
+   list are checked, then the user can see the **Target signal** of
+   choosing Sensor channel by clicking **Plot**.
+
+   .. image:: media_pandoc/media/image31.png
+      :width: 6.86956in
+      :height: 3.95625in
+
+   Figure 2 **Plot** example of **Target Output List** tab
+
+Target Output Function tab
+''''''''''''''''''''''''''
+
+The list cannot be modified. The list is always the same with created
+**Sensor** list. Because, the **Target** channels should be the same
+with the created **Sensor** channels.
+
+.. image:: media_pandoc/media/image35.png
+   :width: 5.83333in
+   :height: 6.82292in
+
+Figure 1 **Target Output List** dialog box [**Target Output Function**
+tab]
+
+-  **Target Signal (\*.CSV)**: “\*.CSV” file should be needed. All data
+   of “\*.CSV” should be CSV (Comma-Separated Values). And there’s no
+   needed header strings on first line. The number of columns should be
+   2 times of the number of sensors. Because every odd column should be
+   a time data.
+
+   .. image:: media_pandoc/media/image36.png
+      :width: 6.45544in
+      :height: 3.86111in
+
+   Figure 2 CSV file format for **Target Signal**
+
+-  **Plot**: User can choose plot view or not.
+
+-  **Windowing**: If this checkbox is checked, then the generated target
+   signal will be considered the windowing function. Default is
+   unchecked.
+
+-  **Time offset**: If this value is set, then the time data of the CSV
+   Signal will be considered as (Time_CSV-Time_Offset). Default value is
+   0.
+
+-  **Plot**: If a “\*.CSV” is set and some plot check box are checked,
+   then user can see the signal data on the opened scope dialog.
+
+-  **Sampling Frequency (Hz)**: Sampling Frequency (Hz) should be set.
+
+-  **End Time** (s): End Time (s) should be set. The number of target
+   signal data should be (**Sampling_Frequency \* End_Time + 1**).
+
+-  **Windowing Parameter for Target Signals**: If the check box is
+   selected, then a windowing function will be considered. Linear
+   trapezoidal function is always computed.
+
+-  **Data Size**: A natural value greater than 0 should be set. And the
+   Data Size should be lower than the number of signal data.
+
+-  **Linear/Step5**: Two interpolation function types are available for
+   windowing function. Default is **Step5** function.
+
+-  **Time Length** (s): A real number greater than 0.0 should be set.
+
+   .. image:: media_pandoc/media/image39.emf
+      :width: 5.84375in
+      :height: 2.04167in
+
+   Figure 3 **Windowing function** for generating “\*.TARGET” file
+
+.. image:: media_pandoc/media/image42.png
+   :width: 4.70034in
+   :height: 3.5in
+
+Figure 4 Comparison of the interpolation types for **Windowing
+function**
+
+-  **Target Output File (\*.TARGET)**: Defines a file name and path by
+   clicking **…**.
+
+-  **Create Target Output File**: Generates the \*.TARGET file by
+   clicking this button.
+
+Simulation
+~~~~~~~~~~
+
+.. image:: media_pandoc/media/image43.png
+   :width: 1.33611in
+   :height: 0.90417in
+
+Figure 1 **Simulation** group in the **TSG** tab
+
+FRF
+^^^
+
+FRF (Frequency Response Function) is should be needed to simulation in
+**TSG** toolkit.
+
+.. image:: media_pandoc/media/image45.png
+   :width: 6.18056in
+   :height: 1.61272in
+
+Figure 1 A schematic diagram of the **TSG** model
+
+FRF can be computed like as equation (1) on the frequency domain.
+
+<eq001>(1)
+
+Where, <eq002>and <eq003> are Actuator Signal and Sensor Signal on the
+frequency domain. The <eq004> means a frequency coordinate. The <eq005>
+is defined as FRF (Frequency Response Function) in the **TSG**.
+
+The signals both <eq002> and <eq003> are computed using FFT (Fast
+Furieror Transfom).
+
+<eq006>(2)
+
+After computing FRF, inverse FRF (<eq007>) will be computed. Generally,
+the inverse FRF can be computed by the Pseudo-inverse method.
+
+.. image:: media_pandoc/media/image55.png
+   :width: 1.34375in
+   :height: 0.89583in
+
+Figure 1 **FRF** icon of the **Simulation** group in the **TSG** tab
+
+There are two tabs in **FRF** dialog box.
+
+-  **FRF** tab: There are analysis options to generate **FRF**.
+
+-  **FRF Result** tab: User can check the **FRF**, the **inverse FRF**,
+   the actuator signals and the sensor signals.
+
+.. image:: media_pandoc/media/image57.png
+   :width: 7.34783in
+   :height: 4.4in
+
+Figure 2 **FRF** dialog box
+
+Step for computing FRF
+
+.. image:: media_pandoc/media/image59.png
+   :width: 7.08696in
+   :height: 4.33889in
+
+Figure 3 Usage **FRF** simulation
+
+1. Click **FRF** icon.
+
+2. Set **Start** and **End Frequencies**.
+
+3. Click **Analysis Setting**.
+
+4. Set the **End Time** on the **Dynamic/Kinematic Analysis** dialog.
+   The `End Time <#EndTime_Target>`__ should be the same of the
+   generated “\*.TARGET” file.
+
+5. Set **Step** on the **Dynamic/Kinematic Analysis** dialog. The
+   **Step** should be the same with (Sampling_Frequency \* End_Time).
+
+6. Click **OK** to leave the **Dynamic/Kinematic Analysis** dialog.
+
+7. Set FRF file name and path on the **FRF** dialog.
+
+8. Click **Simulation** for computing **FRF** and generating “\*.FRF”
+   file.
+
+FRF tab
+'''''''
+
+All signal entities (Actuator, Sensor and, Target) should be already set
+to simulate FRF.
+
+.. image:: media_pandoc/media/image69.png
+   :width: 5.03472in
+   :height: 6.04375in
+
+Figure 1 **FRF** dialog box [**FRF** tab]
+
+-  **Sampling Frequency (Hz)**: User cannot change this value. This
+   value is the Sampling Frequency (Hz) of loaded “\*.TARGET” data.
+
+-  **Actuator Signal Generation for Computing FRF**: The Actuator
+   signals (called drive signals) for computing FRF is using a Chirp
+   signal (A sweep function) using following two parameters.
+
+-  **Start Frequency (Hz)**: Default value is 0.01 Hz.
+
+-  **End Frequency (Hz)**: Default value is 100.0 Hz.
+
+   .. image:: media_pandoc/media/image70.png
+      :width: 5.40903in
+      :height: 3.47847in
+
+   Figure 2 **Chirp** signals
+
+-  **Advanced Option**: Currently user can change to magnitude data of
+   each Actuator channels. Default magnitude is set to 1.0.
+
+   .. image:: media_pandoc/media/image71.png
+      :width: 4in
+      :height: 4.72153in
+
+   Figure 3 **Advanced Option** dialog box
+
+-  **FRF File (\*.FRF)**: Defines a file name and path by clicking
+   **…**.
+
+-  **Analysis Setting**: **Dynamic/Kinematic Analysis** dialog is
+   opened. Because, currently **TSG** is only supported
+   dynamic/kinematic analysis. The **End Time** and **Step** should be
+   match on **TSG** setting.
+
+-  **End Time** data on the **Dynamic/Kinematic Anlaysis** dialog should
+   be the same with the `End Time <#EndTime_Target>`__ of “\*.TARGET”
+   data.
+
+-  **Step** data on the **Dynamic/Kinematic Anlaysis** dialog should be
+   set with (End_Time \* Sampling_Frequency).
+
+   .. image:: media_pandoc/media/image72.png
+      :width: 6.32014in
+      :height: 5.02609in
+
+   Figure 4 **Dynamic/Kinematic Analysis** dialog
+
+-  **Simulate**: Computes **FRF** and generate “\*.FRF” file.
+
+FRF Result tab
+''''''''''''''
+
+Using this dialog, user can check the **FRF**, **inverse FRF**,
+**Actuator signals and, Sensor Signals**. In order to check, the
+“\*.FRF” file is needed.
+
+.. image:: media_pandoc/media/image75.png
+   :width: 5.03472in
+   :height: 6.04375in
+
+Figure 1 **FRF** dialog box [**FRF Result** tab]
+
+.. image:: media_pandoc/media/image78.png
+   :width: 5.03472in
+   :height: 0.95652in
+
+Figure 2 **FRF File** setting
+
+-  **FRF File (\*.FRF)**: Defines “\*.FRF” file by clicking **…**.
+
+-  **FPLT**: Checks the **FRF** and the **inverse FRF** functions with
+   Plot windows.
+
+   .. image:: media_pandoc/media/image79.png
+      :width: 6.70417in
+      :height: 5.41736in
+
+   Figure 3 Plot view for **FRF** and **Inverse FRF** by clicking
+   **FPLT**
+
+   .. image:: media_pandoc/media/image75.png
+      :width: 4.7466in
+      :height: 2.41667in
+
+   Figure 4 **Drive Signal** region on the **FRF Result** tab
+
+-  **Iteration Number**: Defines the **Iteration Number**. **Iteration
+   Number** means the simulation count value for computing **FRF**. And
+   the **Iteration Number** is always the same with the number of
+   **Actuator** channels.
+
+-  **Drive Signal**
+
+-  **Plot** check box in list view
+
+-  **Export**: Generate “\*.TAI” file including the **Actuator** signals
+   on time domain.
+
+-  **Plot**: User can see the signal data on the opened scope dialog.
+
+   .. image:: media_pandoc/media/image75.png
+      :width: 4.71304in
+      :height: 2.12174in
+
+   Figure 5 **Response Signal** region on the **FRF Result** tab
+
+-  **Response Signal**
+
+-  **Plot** check box in list view
+
+-  **Plot**: User can see the signal data on the opened scope dialog.
+
+Iteration
+^^^^^^^^^
+
+Before the **Iteration** simulation of the **TSG**, the **FRF**
+simulation should be needed. Because, the Iteration simulation uses
+**inverse FRF** function.
+
+The first drive signal <eq008> is computed following equation (1).
+
+<eq009>(1)
+
+Where, <eq010>and <eq007> are the target signals on the time domain and
+**inverse FRF** function, respectively.
+
+.. image:: media_pandoc/media/image80.emf
+   :width: 4.47917in
+   :height: 1.07292in
+
+Figure 1 First simulation of the **Iteration** simulation
+
+The first simulation with the first drive signals. Then error signals
+(<eq011>) of the first simulation can be computed with following
+equation (2).
+
+<eq012>(2)
+
+The drive signal <eq013> of the second simulation is computed following
+equation (3).
+
+<eq014>(3)
+
+Where, <eq015>is a scalar value and called a learning factor. The
+learning factor cannot be 0.0.
+
+.. image:: media_pandoc/media/image81.emf
+   :width: 4.52083in
+   :height: 0.97917in
+
+Figure 2 Second simulation of the **Iteration** simulation
+
+After second simulation, we can compute the second error signals <eq016>
+again.
+
+<eq017>(4)
+
+In the case of the other simulation step, the second simulation
+procedure is repeated.
+
+.. image:: media_pandoc/media/image82.png
+   :width: 1.33611in
+   :height: 0.89583in
+
+Figure 3 **Iteration** icon of the **Simulation** group in the **TSG**
+tab
+
+.. image:: media_pandoc/media/image83.png
+   :width: 5.83333in
+   :height: 5.88542in
+
+Figure 4 **Iteration** dialog box
+
+-  **FRF File (\*.FRF)**: Defines “\*.FRF” file by clicking **…**.
+
+-  **FPLT**: Checks the **FRF** and the **inverse FRF** functions in the
+   plot window.
+
+-  **Use First Drive Signal (\*.TAI)**: Default is unchecked. If this is
+   checked, then the first drive signal is replaced the user selected
+   signals in the input “\*.TAI” file instead of equation (1).
+
+-  **TAI File**: If the **Use First Drive Signal (\*.TAI)** is checked,
+   then a “\*.TAI” file should be set using “…” file. The “\*.TAI” file
+   can be generated **Export** function in `FRF
+   Result <#TAI_Export_FRF>`__ and `Result <#TAI_Export_Result>`__
+   dialogs.
+
+-  **Plot**: If a “\*.TAI” file is selected, then User can see the
+   signal data on the opened scope dialog.
+
+-  **Cutoff Frequency**: In order to ignore data of the **inverse FRF**
+   this option is needed. Data of **inverse FRF** is between the **Lower
+   Bound** and the **Upper Bound** frequencies is used to compute the
+   next **Drive Signal**.
+
+-  **Lower Bound (Hz)**: Default is 0.0 Hz.
+
+-  **Upper Bound (Hz)**: Default is 1000000.0 Hz
+
+-  **Windowing Parameter for Drive Signals**: If the check box is
+   selected, then a windowing function will be considered. Linear
+   trapezoidal function is always computed.
+
+-  **Data Size**: A natural value greater than 0 should be set. And the
+   **Data Size** should be lower than the number of signal data.
+
+-  **Linear/Step5** : Two interpolation function types are available for
+   windowing function.
+
+-  **Time Length** (s): A real number greater than 0.0 should be set.
+
+   .. image:: media_pandoc/media/image39.emf
+      :width: 5.84375in
+      :height: 2.04167in
+
+   Figure 5 **Windowing function** for the **Iteration** simulation
+
+.. image:: media_pandoc/media/image42.png
+   :width: 4.70034in
+   :height: 3.5in
+
+Figure 6 Comparison of the interpolation types for **Windowing
+function**
+
+-  **Iteration Parameters**
+
+-  **Iteration Number**: The simulation is repeated with the **Iteration
+   Number**. Default is 1.
+
+-  **Learning Factor**: User can modify the learning factor <eq015> of
+   equation (3). Default is 0.5. The range of the **Learning
+   Factor**:<eq018>.
+
+-  **TSG Result File (\*.TSG)**: Defines the output “\*.TSG” file saved
+   all signal data.
+
+-  **Analysis Setting**: **Dynamic/Kinematic Analysis** dialog is
+   opened. Because, currently **TSG** is only supported
+   dynamic/kinematic analysis. The **End Time** and **Step** should be
+   match on **TSG** setting.
+
+-  **End Time** data on the **Dynamic/Kinematic Anlaysis** dialog should
+   be the same with the `End Time <#EndTime_Target>`__ of “\*.TARGET”
+   data.
+
+-  **Step** data on the **Dynamic/Kinematic Anlaysis** dialog should be
+   set with (End_Time \* Sampling_Frequency).
+
+   .. image:: media_pandoc/media/image72.png
+      :width: 6.32153in
+      :height: 5.26956in
+
+   Figure 7 **Dynamic/Kinematic Analysis** dialog box
+
+-  **Simulation**: The **Iteration** simulation is started.
+
+Usage the Iteration simulation of TSG
+
+.. image:: media_pandoc/media/image83.png
+   :width: 7.34783in
+   :height: 4.17361in
+
+1. Set “\*.FRF” file.
+
+2. Set the Iteration Number.
+
+3. Set the output “\*.TSG” file name and path.
+
+4. Click **Analysis Setting**.
+
+5. Set the **End Time** on the **Dynamic/Kinematic Analysis** dialog.
+   The **End Time** should be set the same value of the “\*.TARGET”
+   data.
+
+6. Set the **STEP** on the **Dynamic/Kinematic Analysis** dialog. The
+   **Step** should be the same with (**End_Time** \*
+   **Sampling_Frequency**).
+
+7. Click **OK** on the **Dynamic/Kinematic Analysis** dialog to leave.
+
+8. Click **Simulate**.
+
+Result
+~~~~~~
+
+You can check the result of the **Iteration** simulation of the **TSG**.
+
+.. image:: media_pandoc/media/image85.png
+   :width: 0.72014in
+   :height: 0.89583in
+
+Figure 1 **Result** icon of the **Result** group in the **TSG** tab
+
+.. image:: media_pandoc/media/image86.png
+   :width: 5.03472in
+   :height: 6.40903in
+
+Figure 2 **Result** dialog box
+
+-  **TSG File (\*.TSG)**: Selects “\*.TSG” result file by clicking ….
+
+-  **Error Rate**
+
+-  **Plot**: User can check the following four **Error Rate** on each
+   **Iteration Number**.
+
+   The error for any sensor *i* at time *t* can be defined as:
+
+   <eq019>(6)
+
+   Where,<eq020>: The signal of sensor *i* at time *t*.<eq021>: The
+   target signal for sensor *i* at time *t*.
+
+   The average signal <eq022> and average target signal <eq023> for any
+   sensor *i* can be defined as :
+
+..
+
+   <eq024>(7)
+
+   <eq025>(8)
+
+Where, <eq026>: The number of data for each sensor (=End time x Sampling
+frequency + 1).
+
+The root mean square signal<eq027>, target signal<eq028>, and error rate
+<eq029> for any sensor *i* can be defined as:
+
+   <eq030>(9)
+
+   <eq031>(10)
+
+   <eq032>(11)
+
+From this, the following error terms can be derived:
+
++-----------------+----------------------------------------------------+
+| Error Term      | Equation                                           |
++=================+====================================================+
+| **RMS**         | <eq033>                                            |
++-----------------+----------------------------------------------------+
+| **Max**         | max(<eq034>) for any <eq035> and <eq036>           |
++-----------------+----------------------------------------------------+
+| **Min**         | min(<eq034>) for any <eq035> and <eq036>           |
++-----------------+----------------------------------------------------+
+| **Average**     | <eq037>                                            |
++-----------------+----------------------------------------------------+
+| **RMS Error     | <eq038>                                            |
+| Rate**          |                                                    |
++-----------------+----------------------------------------------------+
+
+Table 1 Error Rate
+
+Where,<eq039>: The total number of data for all sensors (= Number of
+sensors x (End time x Sampling Frequency + 1) ).
+
+-  **Iteration Number**: User can select the **Iteration Number**.
+
+-  **Drive Signal**
+
+-  **Plot** check box in list view
+
+-  **Export**: User can make a “\*.TAI” or “\*.CSV” file including the
+   drive signals.
+
+-  **Plot**: User can see the signal data on the opened scope dialog.
+
+-  **Response Signal**
+
+-  **Plot** check box in list view
+
+-  **Include Target Signal**: If this check box is checked, then the
+   Target signals is added in the plot.
+
+-  **Include Error Signal**: If this check box is checked, then the
+   error signals (=Target(t) – Sensor(t)) is added in the plot.
+
+-  **Plot**: User can see the signal data on the opened scope dialog.
+
+.. |image1| image:: media_pandoc/media/image12.png
+   :width: 7.3125in
+   :height: 6.48264in
+.. |image2| image:: media_pandoc/media/image29.png
+   :width: 5.06944in
+   :height: 6.03819in
