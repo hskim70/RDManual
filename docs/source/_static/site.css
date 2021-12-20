@@ -1,0 +1,30 @@
+//https://github.com/qutip/qutip/pull/1678/commits/59cc57a682a0d43f38cc2f1251ebed7678070761
+/* .eqno {
+    margin-left: 5px;
+    float: right;
+}
+.math .headerlink {
+    display: none;
+    visibility: hidden;
+}
+.math:hover .headerlink {
+    display: inline-block;
+    visibility: visible;
+    margin-right: -0.7em;
+} */
+
+//#https://stackoverflow.com/questions/14110790/numbered-math-equations-in-restructuredtext/52509369#52509369
+.math {
+    text-align: left;
+}
+.eqno {
+    margin-left: 5px;
+    float: right;
+}
+
+//https://stackoverflow.com/questions/23211695/modifying-content-width-of-the-sphinx-theme-read-the-docs
+//change html width
+//.wy-nav-content {
+//    max-width: 1200%;
+//}
+
