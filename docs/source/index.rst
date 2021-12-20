@@ -8,9 +8,9 @@ RecurDyn Manual
    :glob:
 
    install
-   Tutorial_Sphinx/Tutorial_Sphinx
-   Tutorial_Sphinx/RecurDyn_Issue
-   20_TSG/*
+..   Tutorial_Sphinx/Tutorial_Sphinx
+..   Tutorial_Sphinx/RecurDyn_Issue
+..   20_TSG/*
 
 .. 03_Home/*
 .. 05_Analysis/*
