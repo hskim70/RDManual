@@ -2,9 +2,9 @@
 
 # -- Project information
 
-project = 'Lumache'
-copyright = '2021, Graziella'
-author = 'Graziella'
+project = 'RDManual'
+copyright = '2021, FunctionBay'
+author = 'Hyun Soo Kim'
 
 release = '0.1'
 version = '0.1.0'
