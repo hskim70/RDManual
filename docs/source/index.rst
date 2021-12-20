@@ -7,6 +7,7 @@ RecurDyn Manual
    :maxdepth: 5
    :glob:
 
+   usage
    install
    
 ..   Tutorial_Sphinx/Tutorial_Sphinx
